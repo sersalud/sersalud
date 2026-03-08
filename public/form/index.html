@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERSALUD - Admisión Digital</title>
+    <style>
+        :root {
+            /* Palette - High Contrast & Eye Comfort */
+            --primary: #26a0bc;
+            /* Sersalud Primary */
+            --primary-dark: #235869;
+            /* Sersalud Dark */
+            --secondary: #475569;
+            /* Darker Slate */
+
+            --text-main: #334155;
+            /* Slate-700 - Unified text color */
+            --text-label: #334155;
+            /* Same as main text */
+            --text-placeholder: #94a3b8;
+
+            --bg-app: #1e293b;
+            /* Dark Slate Background (Desktop surface) - High contrast to sheet */
+            --bg-sheet: #ffffff;
+            --bg-input: #f1f5f9;
+            /* Off-white for inputs initially */
+            --border-input: #94a3b8;
+            /* Visible borders */
+            --border-focus: #26a0bc;
+
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.15), 0 2px 4px -2px rgb(0 0 0 / 0.15);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+
+            /* CRITICAL: Force light mode controls so browser doesn't invert colors */
+            color-scheme: light;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-app);
+            /* Darker background to reduce eye strain */
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- LOGIN SCREEN (DARK THEME FOR COMFORT) --- */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Sersalud Gradient - Using brand dark colors */
+            background: linear-gradient(135deg, #235869 0%, #256a7e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-card {
+            background: white;
+            padding: 48px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+
+        .login-logo h1 {
+            color: var(--primary);
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .login-title {
+            color: var(--secondary);
+            font-size: 16px;
+            margin-bottom: 32px;
+            font-weight: 600;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .login-input {
+            padding: 14px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            width: 100%;
+            background: #f8fafc;
+            color: #000000 !important;
+            /* Force Black */
+            transition: all 0.2s;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(38, 160, 188, 0.2);
+        }
+
+        .btn-login {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-login:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .toggle-link {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #64748b;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .toggle-link:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .error-msg {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* --- APP CONTENT --- */
+        #app-content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Controls */
+        .ui-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .btn {
+            background-color: #f8fafc;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            transform: translateY(-2px);
+            border-color: #94a3b8;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-save {
+            background-color: #0f172a;
+            color: white;
+            border: none;
+        }
+
+        .btn-save:hover {
+            background-color: #334155;
+        }
+
+        .btn-delete {
+            color: #dc2626;
+            border-color: #fecaca;
+            background: #fff;
+        }
+
+        .btn-delete:hover {
+            background: #fef2f2;
+            border-color: #dc2626;
+        }
+
+        /* Sheet Layout - The paper stands out against the dark desk */
+        .sheet {
+            background-color: var(--bg-sheet);
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-lg);
+            /* Deeper shadow for depth */
+            border-radius: 2px;
+            position: relative;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 22px;
+            color: #1e293b;
+            margin: 0 0 4px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 15px;
+            color: #475569;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin: 28px 0 16px 0;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header img {
+            height: 80px;
+            margin-bottom: 15px;
+        }
+
+        /* Form Grid System */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: 20px;
+            row-gap: 16px;
+        }
+
+        .col-1 {
+            grid-column: span 1;
+        }
+
+        .col-2 {
+            grid-column: span 2;
+        }
+
+        .col-3 {
+            grid-column: span 3;
+        }
+
+        .col-4 {
+            grid-column: span 4;
+        }
+
+        .col-5 {
+            grid-column: span 5;
+        }
+
+        .col-6 {
+            grid-column: span 6;
+        }
+
+        .col-8 {
+            grid-column: span 8;
+        }
+
+        .col-9 {
+            grid-column: span 9;
+        }
+
+        .col-12 {
+            grid-column: span 12;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-label);
+            font-size: 13px;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        /* Premium Inputs - Force colors to handle Dark Mode browsers */
+        input,
+        select,
+        textarea {
+            border: 1px solid var(--border-input);
+            border-radius: 6px;
+            padding: 0 12px;
+            font-size: 14px;
+            width: 100%;
+            background-color: var(--bg-input) !important;
+            color: #000000 !important;
+            /* Pure Black text always */
+            height: 40px;
+            transition: all 0.2s ease;
+            box-shadow: none;
+            -webkit-appearance: none;
+            /* Removes native OS styles */
+            appearance: none;
+        }
+
+        textarea {
+            height: auto;
+            min-height: 70px;
+            padding: 10px;
+            resize: vertical;
+        }
+
+        ::placeholder {
+            color: var(--text-placeholder) !important;
+            opacity: 1;
+        }
+
+        /* Specific fix for disabled inputs */
+        input:disabled,
+        select:disabled {
+            background-color: #e2e8f0 !important;
+            color: #475569 !important;
+            border-color: #cbd5e1;
+            cursor: not-allowed;
+            opacity: 1;
+            /* iOS fix */
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            box-shadow: 0 0 0 3px rgba(3, 105, 161, 0.15);
+        }
+
+        /* Questionnaire Styling */
+        #questions_container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 40px;
+            row-gap: 0;
+            margin-top: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .question-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .question-row:nth-child(even) {
+            background-color: #f1f5f9;
+        }
+
+        .question-row:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            flex: 1;
+            font-size: 14px;
+            color: var(--text-main);
+            padding-right: 15px;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .question-options {
+            display: flex;
+            gap: 12px;
+            min-width: 90px;
+        }
+
+        .question-options label {
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            margin: 0;
+            text-transform: none;
+            color: var(--text-label);
+        }
+
+        input[type="radio"] {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin: 0;
+            border: 1px solid #94a3b8;
+            -webkit-appearance: auto;
+            /* Radio buttons need native appearance */
+            appearance: auto;
+        }
+
+        /* Detail questions (18-23) */
+        .detail-question-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .detail-input-line {
+            border: none !important;
+            border-bottom: 1px solid #64748b !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            height: 24px !important;
+            padding: 0 4px !important;
+            font-size: 13px !important;
+            color: var(--primary) !important;
+            font-weight: 600 !important;
+        }
+
+        .detail-input-line:focus {
+            border-bottom: 2px solid var(--primary) !important;
+            background: rgba(3, 105, 161, 0.05) !important;
+        }
+
+        /* Contact Box */
+        .contact-box {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .contact-title {
+            color: #1e293b;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* Legal Text Refinements */
+        .sheet-2 {
+            page-break-before: always;
+        }
+
+        .legal-content {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        .legal-content strong {
+            color: #000;
+            font-weight: 900;
+        }
+
+        /* Signature Improvements */
+        .signatures-container {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px 60px;
+        }
+
+        .signature-box canvas {
+            border-bottom: 1px solid #000;
+            background: #fff;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .sig-label {
+            font-size: 12px;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .sig-info {
+            font-size: 11px;
+            color: #475569;
+            font-style: italic;
+        }
+
+        /* Dashboard Table */
+        .dashboard-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid #cbd5e1;
+        }
+
+        .table-row {
+            transition: background 0.1s;
+        }
+
+        .table-row:hover {
+            background: #f1f5f9;
+        }
+
+        /* Print Rules */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            #login-screen,
+            .ui-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            .sheet {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                min-height: 100vh;
+                padding: 10mm;
+                border: none;
+                page-break-after: always;
+            }
+
+            .sheet-2 {
+                page-break-before: always;
+            }
+
+            /* HANDWRITING OPTIMIZATIONS */
+            /* Make inputs larger specifically for printing to allow handwriting */
+            input,
+            select {
+                min-height: 48px !important;
+                /* Larger vertical space */
+                border: 1px solid #000 !important;
+                /* Clear black border */
+                background: transparent !important;
+                box-shadow: none !important;
+                color: #000 !important;
+                padding-top: 14px !important;
+                /* Space for writing */
+            }
+
+            textarea {
+                min-height: 120px !important;
+                /* Larger text areas */
+                border: 1px solid #000 !important;
+            }
+
+            /* Hide placeholders on print so blank forms don't say "Ingrese nombre" */
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            input:disabled {
+                border: 1px solid #000 !important;
+                /* Keep border for disabled fields (like date/ID) */
+                color: #000 !important;
+                background: transparent !important;
+                font-weight: bold;
+            }
+
+            select {
+                appearance: none;
+            }
+
+            .question-row:nth-child(even) {
+                background-color: transparent !important;
+            }
+
+            .contact-box {
+                border: 1px solid #000;
+                background: none;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="index.css">
+    <!-- PDF Generation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+    <script>
+        // Configurar la URL del backend antes de cargar la app
+        window.BACKEND_URL = 'backend/send-email.php';
+
+        // --- SISTEMA DE SINCRONIZACIÓN CENTRALIZADO ---
+        async function syncDatabase() {
+            try {
+                const response = await fetch('backend/api-profiles.php');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    // Mapear los datos de la DB al formato que espera el Dashboard (localStorage)
+                    // Las llaves detectadas son sersalud_db_records_v2_
+                    const syncKey = 'sersalud_db_records_v2_';
+                    
+                    // Solo sincronizamos si somos admin (simulado por la presencia de sesión o para todos los registros)
+                    // El dashboard lee una colección de registros. 
+                    // Si el sistema usa una llave única para todos, o una por usuario.
+                    // Para simplificar la centralización, inyectamos los registros globales.
+                    
+                    const existingData = JSON.parse(localStorage.getItem(syncKey) || '[]');
+                    
+                    // Evitar duplicados comparando IDs o fechas/nombres si ID no está disponible
+                    result.data.forEach(dbRecord => {
+                        const exists = existingData.some(local => 
+                            (local.id && local.id === dbRecord.id) || 
+                            (local.name === dbRecord.name && local.date === dbRecord.date)
+                        );
+                        
+                        if (!exists) {
+                            existingData.push(dbRecord);
+                        }
+                    });
+                    
+                    localStorage.setItem(syncKey, JSON.stringify(existingData));
+                    console.log("Sersalud: Sincronización con Base de Datos completada.");
+                }
+            } catch (err) {
+                console.warn("Sersalud: Error en sincronización:", err);
+            }
+        }
+
+        // Ejecutar sincronización al cargar
+        syncDatabase();
+
+        // Ultra-robust Injection for Legal Checkbox and Branding
+        window.addEventListener('load', () => {
+            console.log("Sersalud Injection Script Initialized V4");
+
+            function injectBrandingAndLegal() {
+                // 1. LOGIN BRANDING
+                const loginLogo = document.querySelector('.login-logo');
+                if (loginLogo && !document.getElementById('injected-logo-login')) {
+                    loginLogo.innerHTML = '';
+                    const img = document.createElement('img');
+                    img.id = 'injected-logo-login';
+                    img.src = 'logo_sersalud.png';
+                    img.style.height = '110px';
+                    img.style.marginBottom = '15px';
+                    img.style.display = 'block';
+                    img.style.margin = '0 auto';
+
+                    const title = document.createElement('h1');
+                    title.textContent = 'HOSPITAL AMBULATORIO DE CIRUGÍA ORTOPÉDICA';
+                    title.style.margin = '0';
+                    title.style.fontSize = '20px'; // Standardized
+                    title.style.color = '#1e293b'; // Slate-800
+                    title.style.fontWeight = '800';
+                    title.style.textAlign = 'center';
+
+                    const subtitle = document.createElement('p');
+                    subtitle.textContent = 'Sistema de Admisión y Evaluación Pre-Anestésica';
+                    subtitle.style.margin = '8px 0 0 0';
+                    subtitle.style.fontSize = '14px'; // Standardized
+                    subtitle.style.color = '#475569'; // Slate-600
+                    subtitle.style.textAlign = 'center';
+
+                    loginLogo.appendChild(img);
+                    loginLogo.appendChild(title);
+                    loginLogo.appendChild(subtitle);
+                }
+
+                // 2. HEADER BRANDING (PRINT/SHEET)
+                const header = document.querySelector('.header');
+                if (header && !document.getElementById('injected-logo-header')) {
+                    header.innerHTML = '';
+                    header.style.display = 'flex';
+                    header.style.flexDirection = 'column';
+                    header.style.alignItems = 'center';
+
+                    const img = document.createElement('img');
+                    img.id = 'injected-logo-header';
+                    img.src = 'logo_sersalud.png';
+                    img.style.height = '80px';
+                    img.style.marginBottom = '15px';
+
+                    const title = document.createElement('h1');
+                    title.textContent = 'HOSPITAL AMBULATORIO DE CIRUGÍA ORTOPÉDICA';
+                    title.style.fontSize = '22px'; // Standardized
+                    title.style.color = '#1e293b'; // Slate-800
+                    title.style.fontWeight = '800';
+
+                    const subtitle = document.createElement('p');
+                    subtitle.textContent = 'Sistema de Admisión y Evaluación Pre-Anestésica';
+                    subtitle.style.fontSize = '15px'; // Standardized
+                    subtitle.style.color = '#475569'; // Slate-600
+
+                    header.appendChild(img);
+                    header.appendChild(title);
+                    header.appendChild(subtitle);
+                }
+
+                // 3. LEGAL CHECKBOX INJECTION
+                if (!document.getElementById('legal-consent-container')) {
+                    // Search for the target text
+                    const allTextElements = document.querySelectorAll('h1, h2, h3, h4, p, strong, label, span');
+                    let targetEl = null;
+
+                    for (const el of allTextElements) {
+                        const txt = el.textContent.toUpperCase();
+                        if (txt.includes('ACEPTACIÓN DEL CONSENTIMIENTO') || txt.includes('ACEPTACION DEL CONSENTIMIENTO')) {
+                            targetEl = el;
+                            break;
+                        }
+                    }
+
+                    // Fallback to signature area if text not found
+                    if (!targetEl) {
+                        targetEl = document.querySelector('.signature-pad-container') ||
+                            document.querySelector('.signature-pad') ||
+                            document.querySelector('canvas');
+                    }
+
+                    if (targetEl) {
+                        console.log("Target found for legal checkbox injection");
+                        const consentContainer = document.createElement('div');
+                        consentContainer.id = 'legal-consent-container';
+                        consentContainer.style.margin = '20px 0';
+                        consentContainer.style.padding = '16px 20px';
+                        consentContainer.style.background = '#f8fafc';
+                        consentContainer.style.border = '1px solid #cbd5e1';
+                        consentContainer.style.borderRadius = '8px';
+                        consentContainer.style.display = 'flex';
+                        consentContainer.style.gap = '12px';
+                        consentContainer.style.alignItems = 'flex-start';
+
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = 'legal-consent-checkbox';
+                        checkbox.style.width = '18px';
+                        checkbox.style.height = '18px';
+                        checkbox.style.marginTop = '2px';
+                        checkbox.style.cursor = 'pointer';
+                        checkbox.style.accentColor = '#256a7e';
+                        checkbox.style.flexShrink = '0';
+
+                        const label = document.createElement('label');
+                        label.htmlFor = 'legal-consent-checkbox';
+                        label.style.fontSize = '12px';
+                        label.style.lineHeight = '1.6';
+                        label.style.color = '#334155';
+                        label.style.cursor = 'pointer';
+                        label.style.fontWeight = '500';
+                        label.style.textAlign = 'justify';
+                        label.style.textTransform = 'none';
+                        label.textContent = "Dando cumplimiento a la normativa de salud de la República de Guatemala, declaro que he leído y acepto expresamente el Aviso de Privacidad y los Términos y Condiciones de Servicios Globales para la Salud, S.A. Autorizo de manera voluntaria e informada el tratamiento de mis datos personales y de salud para los fines de pre-admisión y atención médica aquí descritos.";
+
+                        consentContainer.appendChild(checkbox);
+                        consentContainer.appendChild(label);
+
+                        // Insert after the header or before the signature
+                        if (targetEl.tagName === 'CANVAS' || targetEl.classList.contains('signature-pad-container')) {
+                            targetEl.parentNode.insertBefore(consentContainer, targetEl);
+                        } else {
+                            targetEl.after(consentContainer);
+                        }
+
+                        // Block interaction until checked
+                        const sigPad = document.querySelector('.signature-pad-container') || document.querySelector('canvas');
+                        if (sigPad) {
+                            sigPad.style.transition = 'opacity 0.3s ease';
+                            sigPad.style.opacity = '0.2';
+                            sigPad.style.pointerEvents = 'none';
+
+                            checkbox.addEventListener('change', (e) => {
+                                sigPad.style.opacity = e.target.checked ? '1' : '0.2';
+                                sigPad.style.pointerEvents = e.target.checked ? 'auto' : 'none';
+                            });
+                        }
+                    }
+                }
+            }
+
+            // Execute immediately and set interval for dynamic React changes
+            injectBrandingAndLegal();
+
+            // MutationObserver as primary watcher
+            const observer = new MutationObserver(injectBrandingAndLegal);
+            observer.observe(document.body, { childList: true, subtree: true });
+
+            // Interval as secondary watcher (heartbeat)
+            setInterval(injectBrandingAndLegal, 1000);
+        });
+    </script>
+    <script type="module" crossorigin src="assets/app.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+</html>
