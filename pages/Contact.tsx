@@ -63,29 +63,36 @@ export const Contact: React.FC = () => {
           {/* Form */}
           <div className="bg-white p-6 md:p-10 rounded-3xl border border-slate-100 shadow-xl">
             <h3 className="text-2xl font-bold text-medical-900 mb-8">Envíenos un mensaje</h3>
-            <form className="space-y-6">
+            <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
+              <input type="hidden" name="access_key" value="abbf25bc-ae17-4a27-95c3-7f786f64d142" />
+              <input type="hidden" name="subject" value="Nuevo mensaje desde la web de Sersalud" />
+              <input type="hidden" name="redirect" value="https://web3forms.com/success" />
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">Nombre</label>
-                  <input type="text" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-medical-500 focus:ring-2 focus:ring-medical-200 outline-none transition-all" placeholder="Su nombre" />
+                  <input type="text" name="name" required className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-medical-500 focus:ring-2 focus:ring-medical-200 outline-none transition-all" placeholder="Su nombre" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">Apellido</label>
-                  <input type="text" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-medical-500 focus:ring-2 focus:ring-medical-200 outline-none transition-all" placeholder="Su apellido" />
+                  <input type="text" name="last_name" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-medical-500 focus:ring-2 focus:ring-medical-200 outline-none transition-all" placeholder="Su apellido" />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">Correo Electrónico</label>
-                <input type="email" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-medical-500 focus:ring-2 focus:ring-medical-200 outline-none transition-all" placeholder="ejemplo@correo.com" />
+                <input type="email" name="email" required className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-medical-500 focus:ring-2 focus:ring-medical-200 outline-none transition-all" placeholder="ejemplo@correo.com" />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">Mensaje</label>
-                <textarea rows={4} className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-medical-500 focus:ring-2 focus:ring-medical-200 outline-none transition-all resize-none" placeholder="¿Cómo podemos ayudarle?"></textarea>
+                <textarea rows={4} name="message" required className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-medical-500 focus:ring-2 focus:ring-medical-200 outline-none transition-all resize-none" placeholder="¿Cómo podemos ayudarle?"></textarea>
               </div>
 
-              <button type="button" className="w-full py-4 bg-medical-600 text-white font-bold rounded-xl hover:bg-medical-700 transition-colors shadow-lg shadow-medical-500/30">
+              {/* Spam protection */}
+              <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+
+              <button type="submit" className="w-full py-4 bg-medical-600 text-white font-bold rounded-xl hover:bg-medical-700 transition-colors shadow-lg shadow-medical-500/30">
                 Enviar Mensaje
               </button>
             </form>
