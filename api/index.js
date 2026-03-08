@@ -1,5 +1,11 @@
 import Busboy from 'busboy';
 import FormData from 'form-data';
+import { createClient } from '@supabase/supabase-js';
+
+// Supabase Configuration (Will use environment variables)
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
+const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
 
 export const config = {
   api: {
@@ -56,6 +62,36 @@ export default async function handler(req, res) {
 
       busboy.on('finish', async () => {
         try {
+          const fields = {};
+          // Extract fields for Supabase
+          formData.forEach((value, key) => {
+            if (typeof value === 'string') {
+                fields[key] = value;
+            }
+          });
+
+          // 1. Save to Supabase (Database)
+          if (supabase) {
+            const { error: dbError } = await supabase
+              .from('pacientes')
+              .insert([
+                {
+                  nombres: fields.nombres || fields.name,
+                  apellidos: fields.apellidos,
+                  email: fields.email,
+                  telefono: fields.telefono,
+                  cedula: fields.cedula,
+                  procedimiento: fields.procedimiento,
+                  evaluacion_medica: fields, // Save everything as JSON for backup
+                  consentimiento_datos: true
+                }
+              ]);
+            
+            if (dbError) console.error('Supabase Error:', dbError);
+            else console.log('Sersalud: Datos guardados en Supabase correctamente.');
+          }
+
+          // 2. Send Email (Backup/Notification)
           const fetchRes = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             body: formData,
