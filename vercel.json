@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/form/backend/api-profiles.php",
+      "destination": "/api"
+    },
+    {
+      "source": "/form/backend/send-email.php",
+      "destination": "/api"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    },
+    {
+      "source": "/((?!assets/|form/|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

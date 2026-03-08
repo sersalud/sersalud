@@ -865,6 +865,14 @@
                         }
                     }
                 }
+
+                // 4. BUTTON RENAMING (Rename 'Guardar Cambios' to 'ENVIAR')
+                const allButtons = document.querySelectorAll('button');
+                allButtons.forEach(btn => {
+                    if (btn.textContent.trim().toUpperCase() === 'GUARDAR CAMBIOS') {
+                        btn.textContent = 'ENVIAR';
+                    }
+                });
             }
 
             // Execute immediately and set interval for dynamic React changes

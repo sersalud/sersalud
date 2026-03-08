@@ -1,0 +1,10 @@
+/* Base styles to prevent 404 and build errors */
+:root {
+  --primary: #26a0bc;
+  --secondary: #475569;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
