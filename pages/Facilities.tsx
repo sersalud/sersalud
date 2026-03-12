@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ShieldCheck, Wifi, Zap, Wind, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Zap, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const quirofanoImages = [
    { src: '/assets/images/real_surgery.jpg', alt: 'Quirófano Sersalud' },
@@ -237,30 +237,7 @@ export const Facilities: React.FC = () => {
                </div>
             </div>
 
-            {/* Features List */}
-            <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
-               <div className="p-4">
-                  <div className="w-16 h-16 bg-medical-50 text-medical-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                     <ShieldCheck size={32} />
-                  </div>
-                  <h4 className="font-bold text-medical-900 mb-2 text-lg">Seguridad e Higiene</h4>
-                  <p className="text-slate-500 text-sm leading-relaxed">Protocolos estrictos de esterilización y limpieza constante en todas las áreas críticas y comunes.</p>
-               </div>
-               <div className="p-4">
-                  <div className="w-16 h-16 bg-medical-50 text-medical-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                     <Wind size={32} />
-                  </div>
-                  <h4 className="font-bold text-medical-900 mb-2 text-lg">Ambiente Controlado</h4>
-                  <p className="text-slate-500 text-sm leading-relaxed">Sistemas de aire acondicionado con filtrado especializado para mantener un ambiente seguro.</p>
-               </div>
-               <div className="p-4">
-                  <div className="w-16 h-16 bg-medical-50 text-medical-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                     <Wifi size={32} />
-                  </div>
-                  <h4 className="font-bold text-medical-900 mb-2 text-lg">Conectividad</h4>
-                  <p className="text-slate-500 text-sm leading-relaxed">Wi-Fi de alta velocidad disponible para que los pacientes y sus familias se mantengan conectados.</p>
-               </div>
-            </div>
+
 
          </div>
       </div>

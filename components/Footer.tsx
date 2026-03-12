@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -19,16 +20,17 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-medical-100 mb-6 max-w-sm">
-              Hospital de día enfocado en brindar atención médica especializada con tecnología de vanguardia y calidez humana.
+              Somos un hospital de día enfocado en procedimientos quirúrgicos programados, principalmente artroscópicos.
+              Somos el resultado de una integración vertical luego de varios años como proveedores de material y equipo médico.
             </p>
             <div className="flex items-center gap-3">
-              <a href="https://facebook.com/sersalud" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl flex items-center justify-center text-white transition-all duration-300 hover:scale-110">
+              <a href="https://www.facebook.com/sersalud.hospital" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Sersalud" className="w-10 h-10 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl flex items-center justify-center text-white transition-all duration-300 hover:scale-110">
                 <Facebook size={18} />
               </a>
-              <a href="https://instagram.com/sersalud" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl flex items-center justify-center text-white transition-all duration-300 hover:scale-110">
+              <a href="https://www.instagram.com/SERSALUD.HOSPITAL" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Sersalud" className="w-10 h-10 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl flex items-center justify-center text-white transition-all duration-300 hover:scale-110">
                 <Instagram size={18} />
               </a>
-              <a href="https://linkedin.com/company/sersalud" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl flex items-center justify-center text-white transition-all duration-300 hover:scale-110">
+              <a href="https://www.linkedin.com/company/SERSALUD.HOSPITAL" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Sersalud" className="w-10 h-10 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl flex items-center justify-center text-white transition-all duration-300 hover:scale-110">
                 <Linkedin size={18} />
               </a>
             </div>
@@ -38,12 +40,12 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-6 text-medical-300">Enlaces Rápidos</h4>
             <ul className="space-y-3 text-medical-50">
-              <li><a href="#/hospital" className="hover:text-white transition-colors">Hospital</a></li>
-              <li><a href="#/ortopedia" className="hover:text-white transition-colors">Ortopedia</a></li>
-              <li><a href="#/servicios" className="hover:text-white transition-colors">Servicios</a></li>
-              <li><a href="#/admision" className="hover:text-white transition-colors">Admisión</a></li>
-              <li><a href="#/legal" className="hover:text-white transition-colors">Aviso de Privacidad</a></li>
-              <li><a href="#/legal" className="hover:text-white transition-colors">Términos de Uso</a></li>
+              <li><Link to="/hospital" className="hover:text-white transition-colors">Hospital</Link></li>
+              <li><Link to="/ortopedia" className="hover:text-white transition-colors">Ortopedia</Link></li>
+              <li><Link to="/servicios" className="hover:text-white transition-colors">Servicios</Link></li>
+              <li><Link to="/admision" className="hover:text-white transition-colors">Admisión</Link></li>
+              <li><Link to="/legal" className="hover:text-white transition-colors">Aviso de Privacidad</Link></li>
+              <li><Link to="/legal" className="hover:text-white transition-colors">Términos de Uso</Link></li>
             </ul>
           </div>
 

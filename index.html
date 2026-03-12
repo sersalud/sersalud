@@ -3,9 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sersalud - Hospital de Día</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Sersalud - Hospital de Cirugía Ortopédica Ambulatoria</title>
+    <meta name="description" content="Sersalud: Hospital de cirugía ortopédica ambulatoria en Guatemala. Tratamientos avanzados en traumatología y ortopedia con tecnología de vanguardia." />
+    <link rel="canonical" href="https://sersalud.hospital/" />
+    <link rel="dns-prefetch" href="https://esm.sh">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <script src="https://cdn.tailwindcss.com" fetchpriority="low"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -32,22 +39,22 @@
       }
     </script>
     <style>
-      /* Custom scrollbar for modern feel */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-      }
+      /* Critical CSS for Hero section - bypasses Tailwind CDN wait */
+      .hero-section { min-height: calc(100vh - 10rem); display: flex; align-items: center; position: relative; overflow: hidden; background-color: #f8fafc; margin-top: 6rem; }
+      @media (min-width: 768px) { .hero-section { margin-top: 8rem; } }
+      @media (min-width: 1024px) { .hero-section { margin-top: 12rem; } }
+      .hero-bg { position: absolute; inset: 0; z-index: 0; }
+      .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, #f8fafc 0%, rgba(248, 250, 252, 0.8) 50%, transparent 100%); z-index: 1; }
+      @media (min-width: 1024px) { .hero-overlay { background: linear-gradient(90deg, #f8fafc 0%, rgba(248, 250, 252, 0.3) 100%); } }
+      .hero-content { position: relative; z-index: 10; width: 100%; max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #f1f1f1; }
+      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
@@ -58,10 +65,51 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/index.css">
+    <link rel="preload" as="image" href="/assets/images/hero_quirofano.jpg" fetchpriority="high">
+    <link rel="icon" type="image/png" href="/assets/images/logo_sersalud.png">
+    <link rel="apple-touch-icon" href="/assets/images/logo_sersalud.png">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Sersalud - Hospital de Cirugía Ortopédica">
+    <meta property="og:description" content="Hospital especializado en cirugía ortopédica ambulatoria en Guatemala. Especialistas en traumatología y procedimientos de mínima invasión.">
+    <meta property="og:image" content="https://sersalud.hospital/assets/images/hero_quirofano.jpg">
 </head>
   <body class="bg-slate-50 text-slate-600 antialiased">
-    <div id="root"></div>
+    <div id="root">
+      <header>
+        <h1>Sersalud - Hospital de Cirugía Ortopédica Ambulatoria en Guatemala</h1>
+      </header>
+      <main>
+        <section>
+          <h2>Especialistas en Traumatología y Ortopedia</h2>
+          <p>
+            Somos un hospital de día líder en Guatemala, enfocado en procedimientos quirúrgicos programados, principalmente técnicas artroscópicas de mínima invasión. Sersalud es el resultado de una integración vertical estratégica luego de varios años de experiencia como proveedores de material quirúrgico y equipo médico especializado.
+          </p>
+          <p>
+            Nuestro equipo médico está integrado por especialistas certificados dedicados a brindar una atención personalizada y eficiente. Contamos con instalaciones modernas diseñadas para garantizar la seguridad y el confort del paciente durante su estancia ambulatoria. Ofrecemos servicios avanzados en ortopedia, traumatología y rehabilitación, asegurando una recuperación efectiva mediante tecnología de vanguardia.
+          </p>
+          <p>
+            En nuestro hospital ortopedia, priorizamos la calidad médica y la optimización de procesos para ofrecer costos competitivos sin comprometer la excelencia clínica. Realizamos cirugías programadas de rodilla, hombro, columna y otras especialidades ortopédicas con un enfoque coordinado y profesional.
+          </p>
+          <p>
+            Si busca servicios de ortopedia en Guatemala, Sersalud ofrece la infraestructura necesaria y el personal técnico altamente calificado para llevar a cabo sus procedimientos quirúrgicos con total confianza y seguridad. Nuestra misión es proporcionar una experiencia hospitalaria superior, enfocada en la salud y bienestar de cada paciente que confía en nosotros.
+          </p>
+        </section>
+        <nav>
+          <h3>Enlaces de Navegación</h3>
+          <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/hospital">Sobre el Hospital</a></li>
+            <li><a href="/ortopedia">Especialidad en Ortopedia</a></li>
+            <li><a href="/servicios">Nuestros Servicios Médicos</a></li>
+            <li><a href="/instalaciones">Instalaciones Modernas</a></li>
+            <li><a href="/contacto">Contacto y Ubicación</a></li>
+            <li><a href="/admision">Admisión Digital</a></li>
+            <li><a href="/legal">Aviso de Privacidad Legal</a></li>
+          </ul>
+        </nav>
+      </main>
+    </div>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>

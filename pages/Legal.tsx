@@ -122,7 +122,7 @@ export const Legal: React.FC = () => {
 
                     <footer className="mt-16 pt-8 border-t border-slate-100 text-center">
                         <p className="text-slate-400 text-xs">
-                            Última actualización: Marzo 2026. SERSALUD - Hospital de Día.
+                            Última actualización: Marzo 2026. SERSALUD - Hospital de Cirugía Ortopédica Ambulatoria.
                         </p>
                     </footer>
                 </motion.div>

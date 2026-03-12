@@ -71,6 +71,7 @@ export const Navbar: React.FC = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-slate-600 hover:text-medical-600 focus:outline-none"
+              aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
             >
               {isOpen ? <X size={32} /> : <Menu size={32} />}
             </button>

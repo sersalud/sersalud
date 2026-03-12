@@ -4,7 +4,7 @@ import { Activity, Bone, Stethoscope, Cog, ScanLine } from 'lucide-react';
 const procedures = [
   {
     title: "Artroscopía De Rodilla",
-    description: "Es una cirugía mínimamente invasiva que se realiza para evaluar o reparar el interior de la rodilla.",
+    description: "Es una cirugía minimamente invasiva que se realiza para evaluar o reparar el interior de la rodilla.",
     icon: Bone,
     style: "light"
   },
@@ -22,12 +22,12 @@ const procedures = [
   },
   {
     title: "Reparación De Meniscos",
-    description: "Es una cirugía para reparar el cartílago que amortigua la articulación de la rodilla.",
+    description: "Es una cirugía para reparar el cartilago que amortigua la articulación de la rodilla.",
     icon: HeartPulseIcon,
     style: "dark"
   },
   {
-    title: "Reparación De Manguito Rotador",
+    title: "Reparación De Manguito",
     description: "La reparación del manguito rotador es una cirugía para reparar los tendones dañados que rodean el hombro.",
     icon: Cog,
     style: "light"
@@ -132,7 +132,7 @@ export const Services: React.FC = () => {
       <div className="w-full overflow-hidden h-[300px] md:h-[400px]">
         <img
           src="/assets/images/9.png"
-          alt="Sersalud Hospital de Día"
+          alt="Sersalud - Hospital de Cirugía Ortopédica Ambulatoria"
           className="w-full h-full object-cover object-bottom"
           referrerPolicy="no-referrer"
         />
