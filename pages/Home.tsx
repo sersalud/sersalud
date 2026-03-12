@@ -134,6 +134,49 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Quiénes Somos & Misión Section - In place of Testimonials */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            {/* Quiénes Somos Left Column */}
+            <div className="space-y-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-medical-900 tracking-tight">
+                ¿Quiénes Somos?
+              </h2>
+              <div className="prose prose-lg text-slate-600 space-y-4">
+                <p className="font-semibold text-medical-700 text-xl leading-relaxed">
+                  Somos un hospital de dia enfocado en procedimientos programados,
+                </p>
+                <p className="leading-relaxed">
+                  Somos el resultado de una integración vertical luego de varios años como proveedores de material y equipo médico.
+                </p>
+              </div>
+            </div>
+
+            {/* Misión Right Column / Card */}
+            <div className="relative">
+              <div className="absolute -inset-4 bg-medical-50/50 rounded-[2.5rem] blur-2xl -z-10"></div>
+              <div className="bg-white p-8 md:p-12 rounded-[2.5rem] border border-medical-100 shadow-xl shadow-medical-900/5 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-medical-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-6 text-medical-600">
+                    <div className="w-12 h-12 bg-medical-50 rounded-2xl flex items-center justify-center">
+                      <Activity size={24} />
+                    </div>
+                    <h3 className="text-2xl font-bold uppercase tracking-widest">Misión</h3>
+                  </div>
+                  <p className="text-slate-600 italic text-xl leading-relaxed">
+                    "Proporcionar al médico un espacio con la infraestructura, el equipo, el material y el personal especializado para brindar a su paciente la atención médica que requiere."
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
 
 
       {/* Metrics Section - Directly under Testimonials */}
